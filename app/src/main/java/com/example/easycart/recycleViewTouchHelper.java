@@ -9,16 +9,20 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easycart.Adapter.MyAdapter;
 import com.example.easycart.Model.ItemModel;
+import com.example.easycart.Utils.SQLiteHelper;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 public class recycleViewTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     private MyAdapter myAdapter;
-    ArrayList<ItemModel> boughtItemList = new ArrayList<>();
+    List<ItemModel> purchasedItemList = new ArrayList<>();
+    List<ItemModel> itemModelList = new ArrayList<>();
+    SQLiteHelper sqLiteHelper;
 
     public recycleViewTouchHelper(MyAdapter myAdapter) {
         super(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END,
@@ -67,7 +71,7 @@ public class recycleViewTouchHelper extends ItemTouchHelper.SimpleCallback {
             AlertDialog dialog = builder.create();
             dialog.show();
         }else{
-
+            myAdapter.storePurchasedItem(position);
         }
     }
 

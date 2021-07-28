@@ -167,17 +167,17 @@ public class addNewItem extends BottomSheetDialogFragment {
         return view;
     }
 
-    // use findViewById in onViewCreated, make sure the view is fully created.
+    // make sure the view is fully created in onViewCreated.
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable Bundle savedInstanceState) {
         // get the button from the dialog
-        saveBtn = view.findViewById(R.id.saveBtn);
-        cancelBtn = view.findViewById(R.id.delBtn);
+        saveBtn = (Button) view.findViewById(R.id.saveBtn);
+        cancelBtn = (Button) view.findViewById(R.id.delBtn);
 
         // get the editText element from the dialog
-        nameEdit = view.findViewById(R.id.name_input);
-        priceEdit = view.findViewById(R.id.price_input);
-        quantityEdit = view.findViewById(R.id.qty_input);
+        nameEdit = (EditText) view.findViewById(R.id.name_input);
+        priceEdit = (EditText) view.findViewById(R.id.price_input);
+        quantityEdit = (EditText) view.findViewById(R.id.qty_input);
 
         // Initialize the sqLiteHelper
         sqLiteHelper = new SQLiteHelper(getActivity());
@@ -191,6 +191,7 @@ public class addNewItem extends BottomSheetDialogFragment {
                 String newName = nameEdit.getText().toString().trim();
                 String newPrice = priceEdit.getText().toString();
                 String newQty = quantityEdit.getText().toString().trim();
+                int status = 0; // item have not been purchased
 
                 // check whether the user fill in all the info.
                 if(!TextUtils.isEmpty(newName) && !TextUtils.isEmpty(newPrice) && !TextUtils.isEmpty(newQty)){
@@ -199,6 +200,7 @@ public class addNewItem extends BottomSheetDialogFragment {
                     itemModel.setName(newName);
                     itemModel.setPrice(Double.parseDouble(newPrice));
                     itemModel.setQuantity(Integer.parseInt(newQty));
+                    itemModel.setStatus(status);
 
                     // insert the item into database
                     sqLiteHelper.insertItem(itemModel);

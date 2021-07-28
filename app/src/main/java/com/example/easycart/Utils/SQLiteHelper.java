@@ -23,6 +23,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String NAME_COL = "NAME";
     public static final String PRICE_COL = "PRICE";
     public static final String QUANTITY_COL = "QUANTITY";
+    public static final String STATUS_COL = "STATUS";
+    public static final String NOTE_COL = "NOTE";
     private SQLiteDatabase sqLiteDatabase;
 
 
@@ -33,7 +35,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + MYDATABASE_TABLE
-                + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT NOT NULL, PRICE REAL, QUANTITY INTEGER)");
+                + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT NOT NULL, " +
+                "PRICE REAL, QUANTITY INTEGER, NOTE TEXT, STATUS INTEGER)");
     }
 
     @Override
@@ -51,7 +54,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         contentValues.put(NAME_COL, item.getName());
         contentValues.put(PRICE_COL, item.getPrice());
         contentValues.put(QUANTITY_COL, item.getQuantity());
-
+        contentValues.put(NOTE_COL, item.getNote());
+        contentValues.put(STATUS_COL, item.getStatus());
 
         sqLiteDatabase.insert(MYDATABASE_TABLE, null, contentValues);
     }
@@ -80,6 +84,22 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         sqLiteDatabase.update(MYDATABASE_TABLE, contentValues, "ID=?", new String[]{String.valueOf(id)});
     }
 
+    public void updateNote(int id, String note) {
+        sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NOTE_COL, note);
+
+        sqLiteDatabase.update(MYDATABASE_TABLE, contentValues, "ID=?", new String[]{String.valueOf(id)});
+    }
+
+    public void updateStatus(int id, int status) {
+        sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(STATUS_COL, status);
+
+        sqLiteDatabase.update(MYDATABASE_TABLE, contentValues, "ID=?", new String[]{String.valueOf(id)});
+    }
+
     public void itemDelete(int id) {
         sqLiteDatabase = this.getWritableDatabase();
         sqLiteDatabase.delete(MYDATABASE_TABLE, "ID=?", new String[]{String.valueOf(id)});
@@ -90,8 +110,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         List<ItemModel> itemModelList = new ArrayList<>();
         Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE,
                 null,
-                null,
-                null,
+                STATUS_COL + "=?",
+                new String[]{String.valueOf(0)},
                 null,
                 null,
                 null);
@@ -101,6 +121,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         int name_index = cursor.getColumnIndex(NAME_COL);
         int price_index = cursor.getColumnIndex(PRICE_COL);
         int quantity_index = cursor.getColumnIndex(QUANTITY_COL);
+        int status_index = cursor.getColumnIndex(STATUS_COL);
+        int note_index = cursor.getColumnIndex(NOTE_COL);
 
         sqLiteDatabase.beginTransaction();
         try {
@@ -110,6 +132,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 item.setName(cursor.getString(name_index));
                 item.setPrice(cursor.getDouble(price_index));
                 item.setQuantity(cursor.getInt(quantity_index));
+                item.setNote(cursor.getString(note_index));
+                item.setStatus(cursor.getInt(status_index));
                 itemModelList.add(item);
             }
         } finally {
@@ -119,12 +143,50 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return itemModelList;
     }
 
+    public List<ItemModel> getAllPurchasedItem(){
+        sqLiteDatabase = this.getWritableDatabase();
+        List<ItemModel> purchasedItemList = new ArrayList<>();
+        Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE,
+                null,
+                STATUS_COL + "=?",
+                new String[]{String.valueOf(1)},
+                null,
+                null,
+                null);
+
+        // Columns index
+        int id_index = cursor.getColumnIndex(ID_COL);
+        int name_index = cursor.getColumnIndex(NAME_COL);
+        int price_index = cursor.getColumnIndex(PRICE_COL);
+        int quantity_index = cursor.getColumnIndex(QUANTITY_COL);
+        int status_index = cursor.getColumnIndex(STATUS_COL);
+        int note_index = cursor.getColumnIndex(NOTE_COL);
+
+        sqLiteDatabase.beginTransaction();
+        try {
+            for (cursor.moveToFirst(); !(cursor.isAfterLast()); cursor.moveToNext()) {
+                ItemModel item = new ItemModel();
+                item.setId(cursor.getInt(id_index));
+                item.setName(cursor.getString(name_index));
+                item.setPrice(cursor.getDouble(price_index));
+                item.setQuantity(cursor.getInt(quantity_index));
+                item.setNote(cursor.getString(note_index));
+                item.setStatus(cursor.getInt(status_index));
+                purchasedItemList.add(item);
+            }
+        } finally {
+            sqLiteDatabase.endTransaction();
+            cursor.close();
+        }
+        return purchasedItemList;
+    }
+
     public double getTotalPrice(){
         sqLiteDatabase = this.getWritableDatabase();
         Cursor cursor = sqLiteDatabase.query(MYDATABASE_TABLE,
                 new String[]{PRICE_COL, QUANTITY_COL},
-                null,
-                null,
+                STATUS_COL + "=?",
+                new String[]{String.valueOf(0)},
                 null,
                 null,
                 null);
@@ -173,8 +235,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    public void deleteAll() {
+    public void deleteAllItem() {
         sqLiteDatabase = this.getWritableDatabase();
-        sqLiteDatabase.delete(MYDATABASE_TABLE, null, null);
+        sqLiteDatabase.delete(MYDATABASE_TABLE, "STATUS=?", new String[]{String.valueOf(0)});
+    }
+
+    public void deleteAllHistory() {
+        sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.delete(MYDATABASE_TABLE, "STATUS=?", new String[]{String.valueOf(1)});
     }
 }

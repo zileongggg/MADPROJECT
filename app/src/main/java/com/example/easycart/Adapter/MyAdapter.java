@@ -35,38 +35,39 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
      */
     private OnItemClickListener mListener;
     private List<ItemModel> itemModelList;
-    private List<ItemModel> boughtItemList;
     private MainActivity activity;
     RecyclerView recyclerView;
     RelativeLayout relativeLayout;
     Context context;
 
     // Interface for different onClick method on top of the view.
-    public interface OnItemClickListener{
+    public interface OnItemClickListener {
         void onItemClick(int position);
+
         void onAddBtnClick(int position);
+
         void onMinusBtnClick(int position);
     }
 
     // get the listener from the main activity
-    public void setOnItemClickListener(OnItemClickListener listener){
+    public void setOnItemClickListener(OnItemClickListener listener) {
         mListener = listener;
     }
 
     // Constructor
-    public MyAdapter(Context context, List<ItemModel> itemModelList, RecyclerView recyclerView, RelativeLayout relativeLayout){
+    public MyAdapter(Context context, List<ItemModel> itemModelList, RecyclerView recyclerView, RelativeLayout relativeLayout) {
         this.context = context;
         this.itemModelList = itemModelList;
         this.recyclerView = recyclerView;
         this.relativeLayout = relativeLayout;
     }
 
-    public void setItem(List<ItemModel> itemModelList){
+    public void setItem(List<ItemModel> itemModelList) {
         this.itemModelList = itemModelList;
         notifyDataSetChanged();
     }
 
-    public List<ItemModel> getItemList(){
+    public List<ItemModel> getItemList() {
         return itemModelList;
     }
 
@@ -80,7 +81,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return new MyViewHolder(view, mListener);
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder{
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView name, price, qty;
         Button addBtn, minusBtn;
@@ -99,11 +100,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null){
+                    if (listener != null) {
                         // get the position of the row
                         int position = getAdapterPosition();
                         // make sure the position is valid
-                        if (position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
                             // pass the position to the interface OnItemClickListener then to Main Activity
                             listener.onItemClick(position);
                         }
@@ -114,11 +115,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null){
+                    if (listener != null) {
                         // get the position of the row
                         int position = getAdapterPosition();
                         // make sure the position is valid
-                        if (position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
                             // pass the position to the interface OnItemClickListener then to Main Activity
                             listener.onAddBtnClick(position);
                         }
@@ -128,11 +129,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
             minusBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null){
+                    if (listener != null) {
                         // get the position of the row
                         int position = getAdapterPosition();
                         // make sure the position is valid
-                        if (position != RecyclerView.NO_POSITION){
+                        if (position != RecyclerView.NO_POSITION) {
                             // pass the position to the interface OnItemClickListener then to Main Activity
                             listener.onMinusBtnClick(position);
                         }
@@ -142,22 +143,25 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         }
     }
 
-    @SuppressLint({"SetTextI18n", "DefaultLocale"})
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull @NotNull MyAdapter.MyViewHolder holder, int position) {
         // set the content and display
         ItemModel item = itemModelList.get(position);
-        holder.name.setText(item.getName());
-        holder.price.setText("RM "+ item.getPrice());
-        holder.qty.setText(String.valueOf(item.getQuantity()));
+        if (item.getStatus() == 0) {
+            DecimalFormat df = new DecimalFormat("#.##");
+            holder.name.setText(item.getName());
+            holder.price.setText("RM " + df.format(item.getPrice()));
+            holder.qty.setText(String.valueOf(item.getQuantity()));
+        }
     }
 
-    public Context getContext(){
+    public Context getContext() {
         return context;
     }
 
     @SuppressLint("SetTextI18n")
-    public void deleteItem(int position){
+    public void deleteItem(int position) {
         SQLiteHelper sqLiteHelper = new SQLiteHelper(getContext());
         ItemModel itemModel = itemModelList.get(position);
         sqLiteHelper.itemDelete(itemModel.getId());
@@ -166,7 +170,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void editItem(int position){
+    public void editItem(int position) {
         ItemModel itemModel = itemModelList.get(position);
         // pass data within activity and fragment
         Bundle bundle = new Bundle();
@@ -182,7 +186,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
     }
 
     @SuppressLint("SetTextI18n")
-    public void updateTotalPrice(){
+    public void updateTotalPrice() {
         SQLiteHelper sqLiteHelper = new SQLiteHelper(getContext());
         TextView totalPrice = relativeLayout.findViewById(R.id.totalPrice);
         // cast the price into 2 decimal places
@@ -195,6 +199,23 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return itemModelList.size();
     }
 
+    public void setItemPurchased(int position) {
+        SQLiteHelper sqLiteHelper = new SQLiteHelper(getContext());
+        ItemModel itemModel = itemModelList.get(position);
+    }
+
+    public void storePurchasedItem(int position) {
+        int status = 1;
+        // first update the status in the database
+        SQLiteHelper sqLiteHelper = new SQLiteHelper(getContext());
+        int id = itemModelList.get(position).getId();
+        sqLiteHelper.updateStatus(id,status);
+
+        // remove the item from the list == remove from the recycle view
+        itemModelList.remove(position);
+        updateTotalPrice();
+        notifyDataSetChanged();
+    }
 
    /* private class MyOnClickListener implements View.OnClickListener {
         @Override

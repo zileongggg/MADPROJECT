@@ -2,8 +2,8 @@ package com.example.easycart.Model;
 
 public class ItemModel {
 
-    private String name;
-    private int quantity, id;
+    private String name, note;
+    private int quantity, id, status;
     private double price;
 
     public String getName() {
@@ -38,4 +38,19 @@ public class ItemModel {
         this.id = id;
     }
 
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
+    }
+
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
 }

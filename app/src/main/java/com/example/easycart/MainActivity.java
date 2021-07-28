@@ -3,9 +3,12 @@ package com.example.easycart;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,7 +17,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.easycart.Adapter.MyAdapter;
 import com.example.easycart.Model.ItemModel;
 import com.example.easycart.Utils.SQLiteHelper;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationBarView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +29,6 @@ public class MainActivity extends AppCompatActivity implements onDialogCloseList
     private SQLiteHelper sqLiteHelper;
     private RecyclerView recyclerView;
     private RelativeLayout relativeLayout;
-    private ItemModel itemModel;
     private MyAdapter myAdapter;
     private List<ItemModel> itemModelList = new ArrayList<>();
     private RecyclerView.LayoutManager layoutManager;
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements onDialogCloseList
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /* start of build of recycle view */
+        // start of build of recycle view
         sqLiteHelper = new SQLiteHelper(this);
         itemModelList = sqLiteHelper.getAllItem();
 
@@ -53,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements onDialogCloseList
         // update total price in main activity
         myAdapter.updateTotalPrice();
 
-        /* Floating action button */
+        // Floating action button
         fab = findViewById(R.id.addNewItemBtn);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,8 +82,10 @@ public class MainActivity extends AppCompatActivity implements onDialogCloseList
                 intent.putExtra("itemName", itemModelList.get(position).getName());
                 intent.putExtra("itemPrice", itemModelList.get(position).getPrice());
                 intent.putExtra("itemQuantity", itemModelList.get(position).getQuantity());
+                intent.putExtra("itemNote", itemModelList.get(position).getNote());
                 intent.putExtra("position", position);
                 intent.putExtra("id", id);
+                Toast.makeText(MainActivity.this, ""+itemModelList.get(position).getStatus(), Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
 
@@ -106,8 +112,23 @@ public class MainActivity extends AppCompatActivity implements onDialogCloseList
                 myAdapter.updateTotalPrice();
                 myAdapter.notifyDataSetChanged();
             }
-
         });
+
+        // Bottom action bar
+        BottomNavigationView bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        bottomNavigationView.setSelectedItemId(R.id.home);
+        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+                if (item.getItemId() == R.id.history) {
+                    startActivity(new Intent(MainActivity.this, history.class));
+                    overridePendingTransition(0, 0);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     // perform some task when the dialog is closed

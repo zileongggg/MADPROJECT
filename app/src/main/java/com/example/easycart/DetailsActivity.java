@@ -23,12 +23,12 @@ import java.util.List;
 
 public class DetailsActivity extends AppCompatActivity {
 
-    private EditText editName, editPrice, editQuantity;
+    private EditText editName, editPrice, editQuantity, editNote;
     private Button editSave, editCancel;
     private List<ItemModel> itemModelList = new ArrayList<>();
     private MyAdapter myAdapter;
     SQLiteHelper sqLiteHelper;
-    private String name;
+    private String name, note;
     private double price;
     private int quantity;
     private ImageView itemImage;
@@ -51,16 +51,19 @@ public class DetailsActivity extends AppCompatActivity {
             public void onClick(View v) {
                 sqLiteHelper = new SQLiteHelper(DetailsActivity.this);
                 int id = getIntent().getIntExtra("id", 0);
-                editName = findViewById(R.id.nameEdit);
-                editPrice = findViewById(R.id.priceEdit);
-                editQuantity = findViewById(R.id.qtyEdit);
+                editName = (EditText) findViewById(R.id.nameEdit);
+                editPrice = (EditText) findViewById(R.id.priceEdit);
+                editQuantity = (EditText) findViewById(R.id.qtyEdit);
+                editNote = (EditText) findViewById(R.id.noteEdit);
                 String newName = editName.getText().toString().trim();
                 String newPrice = editPrice.getText().toString();
                 String newQty = editQuantity.getText().toString().trim();
+                String newNote = editNote.getText().toString().trim();
 
                 sqLiteHelper.updateName(id, newName);
                 sqLiteHelper.updatePrice(id, Double.parseDouble(newPrice));
                 sqLiteHelper.updateQuantity(id, Integer.parseInt(newQty));
+                sqLiteHelper.updateNote(id, newNote);
                 startActivity(new Intent(DetailsActivity.this, MainActivity.class));
             }
         });
@@ -106,20 +109,22 @@ public class DetailsActivity extends AppCompatActivity {
             name = getIntent().getStringExtra("itemName");
             price = getIntent().getDoubleExtra("itemPrice", 0);
             quantity = getIntent().getIntExtra("itemQuantity", 0);
+            note = getIntent().getStringExtra("itemNote");
 
-            setIntentData(name, price, quantity);
+            setIntentData(name, price, quantity, note);
         }
     }
 
-    public void setIntentData(String name, double price, int quantity) {
+    public void setIntentData(String name, double price, int quantity, String note) {
         editName = findViewById(R.id.nameEdit);
         editPrice = findViewById(R.id.priceEdit);
         editQuantity = findViewById(R.id.qtyEdit);
+        editNote = findViewById(R.id.noteEdit);
 
         editName.setText(name);
         editPrice.setText(String.valueOf(price));
         editQuantity.setText(String.valueOf(quantity));
-
+        editNote.setText(note);
     }
 
 }
