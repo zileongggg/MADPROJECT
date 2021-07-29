@@ -2,27 +2,25 @@ package com.example.easycart;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.graphics.Canvas;
+import android.graphics.Paint;
+import android.graphics.drawable.Drawable;
+import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.easycart.Adapter.MyAdapter;
-import com.example.easycart.Model.ItemModel;
-import com.example.easycart.Utils.SQLiteHelper;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class recycleViewTouchHelper extends ItemTouchHelper.SimpleCallback {
 
     private MyAdapter myAdapter;
-    List<ItemModel> purchasedItemList = new ArrayList<>();
-    List<ItemModel> itemModelList = new ArrayList<>();
-    SQLiteHelper sqLiteHelper;
 
     public recycleViewTouchHelper(MyAdapter myAdapter) {
         super(ItemTouchHelper.UP | ItemTouchHelper.DOWN | ItemTouchHelper.START | ItemTouchHelper.END,
@@ -71,20 +69,53 @@ public class recycleViewTouchHelper extends ItemTouchHelper.SimpleCallback {
             AlertDialog dialog = builder.create();
             dialog.show();
         }else{
-            myAdapter.storePurchasedItem(position);
+            AlertDialog.Builder builder = new AlertDialog.Builder(myAdapter.getContext());
+
+            builder.setTitle("Store into History");
+            builder.setMessage("Are you sure you want to store the item into history?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    myAdapter.storePurchasedItem(position);
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    myAdapter.notifyItemChanged(position);
+                }
+            });
+
+            AlertDialog dialog = builder.create();
+            dialog.show();
         }
     }
 
-    //@Override
-   /* public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView, @NonNull RecyclerView.ViewHolder viewHolder, float dX, float dY, int actionState, boolean isCurrentlyActive) {
+    public void onChildDraw(@NonNull Canvas c, @NonNull RecyclerView recyclerView,
+                            @NonNull RecyclerView.ViewHolder viewHolder,
+                            float dX, float dY, int actionState, boolean isCurrentlyActive) {
 
-        new RecyclerViewSwipeDecorator.Builder(myAdapter.getContext(), c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive)
-                .addSwipeLeftBackgroundColor(ContextCompat.getColor(myAdapter.getContext() , R.color.primary))
-                .addSwipeLeftActionIcon(R.drawable.ic_baseline_delete_sweep_24)
-                .addSwipeRightBackgroundColor(Color.RED)
-                .addSwipeRightActionIcon(R.drawable.ic_baseline_delete_sweep_24)
-                .create()
-                .decorate();
+        View itemView = viewHolder.itemView;
+        Paint p = new Paint();
+        Drawable background;
+
+        if (dX > 0) {
+            p.setColor(myAdapter.getContext().getResources().getColor(R.color.red));
+            // Draw Rect with varying right side, equal to displacement dX
+            c.drawRect((float) itemView.getLeft() + dY, (float) itemView.getTop(),  (float) itemView.getRight(),
+                    (float) itemView.getBottom(), p);
+            background = ContextCompat.getDrawable(myAdapter.getContext(), R.drawable.ic_baseline_delete_24);
+            background.setBounds(itemView.getLeft(), itemView.getTop(), itemView.getLeft() + ((int) dX), itemView.getBottom());
+            background.draw(c);
+        } else if (dX < 0) {
+            p.setColor(myAdapter.getContext().getResources().getColor(R.color.secondary));
+            c.drawRect((float) itemView.getLeft() + dY, (float) itemView.getTop(),  (float) itemView.getRight(),
+                    (float) itemView.getBottom(), p);
+            background = ContextCompat.getDrawable(myAdapter.getContext(), R.drawable.ic_baseline_save_alt_24);
+            background.setBounds(itemView.getRight() + ((int) dX), itemView.getTop(), itemView.getRight(), itemView.getBottom());
+            background.draw(c);
+        }
         super.onChildDraw(c, recyclerView, viewHolder, dX, dY, actionState, isCurrentlyActive);
-    }*/
+
+    }
 }

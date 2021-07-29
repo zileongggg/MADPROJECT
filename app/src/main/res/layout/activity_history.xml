@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".history"
+    tools:context=".HistoryActivity"
     android:orientation="vertical">
 
     <RelativeLayout
+        android:id="@+id/rll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -19,14 +20,11 @@
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:layout_margin="10dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="9dp"
-            android:layout_marginRight="9dp"
-            android:fontFamily="@font/poppins_medium"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/black"
             android:gravity="center"
             android:text="Purchased History"
-            android:textSize="30sp"
-            tools:layout_editor_absoluteX="10dp" />
+            android:textSize="25sp" />
 
         <View
             android:id="@+id/line"
@@ -42,18 +40,17 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/historyRecycleView"
         android:layout_width="match_parent"
-        android:layout_height="536dp"
+        android:layout_height="match_parent"
         android:layout_above="@+id/history_bottom_navigation"
-        android:layout_below="@+id/line"
-        android:layout_marginTop="10dp"
+        android:layout_below="@+id/rll"
         app:layout_constraintBottom_toTopOf="@+id/history_bottom_navigation"
         app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:ignore="NotSibling"/>
+        tools:ignore="NotSibling" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/history_bottom_navigation"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="@color/secondary"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -66,11 +63,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/primary"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="60dp"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:src="@drawable/ic_baseline_delete_24"
-        android:layout_alignParentEnd="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="70dp"
+        android:src="@drawable/ic_baseline_delete_24" />
 
 </RelativeLayout>

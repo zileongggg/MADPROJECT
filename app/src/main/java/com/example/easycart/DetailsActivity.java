@@ -27,13 +27,13 @@ public class DetailsActivity extends AppCompatActivity {
     private Button editSave, editCancel;
     private List<ItemModel> itemModelList = new ArrayList<>();
     private MyAdapter myAdapter;
-    SQLiteHelper sqLiteHelper;
     private String name, note;
     private double price;
     private int quantity;
     private ImageView itemImage;
     private static final int PICK_IMAGE = 1;
     private Uri imageUri;
+    SQLiteHelper sqLiteHelper;
 
 
     @Override

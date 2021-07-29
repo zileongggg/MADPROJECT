@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.RelativeLayout;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -85,7 +84,6 @@ public class MainActivity extends AppCompatActivity implements onDialogCloseList
                 intent.putExtra("itemNote", itemModelList.get(position).getNote());
                 intent.putExtra("position", position);
                 intent.putExtra("id", id);
-                Toast.makeText(MainActivity.this, ""+itemModelList.get(position).getStatus(), Toast.LENGTH_SHORT).show();
                 startActivity(intent);
             }
 
@@ -121,7 +119,7 @@ public class MainActivity extends AppCompatActivity implements onDialogCloseList
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 if (item.getItemId() == R.id.history) {
-                    startActivity(new Intent(MainActivity.this, history.class));
+                    startActivity(new Intent(MainActivity.this, HistoryActivity.class));
                     overridePendingTransition(0, 0);
                     return true;
                 }

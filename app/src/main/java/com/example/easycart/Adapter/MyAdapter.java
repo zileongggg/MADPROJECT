@@ -1,5 +1,4 @@
 package com.example.easycart.Adapter;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
@@ -24,11 +23,8 @@ import org.jetbrains.annotations.NotNull;
 import java.text.DecimalFormat;
 import java.util.List;
 
-//import com.example.easycart.addNewItem;
-
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
 
-    /*final View.OnClickListener onClickListener = new MyOnClickListener();*/
     /**
      * onItemClickListener is used to make change on particular row view.
      * the listener will be the main activity
@@ -199,11 +195,6 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         return itemModelList.size();
     }
 
-    public void setItemPurchased(int position) {
-        SQLiteHelper sqLiteHelper = new SQLiteHelper(getContext());
-        ItemModel itemModel = itemModelList.get(position);
-    }
-
     public void storePurchasedItem(int position) {
         int status = 1;
         // first update the status in the database
@@ -216,15 +207,5 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.MyViewHolder> {
         updateTotalPrice();
         notifyDataSetChanged();
     }
-
-   /* private class MyOnClickListener implements View.OnClickListener {
-        @Override
-        public void onClick(View v) {
-            int itemPosition = recyclerView.getChildLayoutPosition(v);
-
-            String name = itemModelList.get(itemPosition).getName();
-            Toast.makeText(context, name, Toast.LENGTH_SHORT).show();
-        }
-    }*/
 
 }

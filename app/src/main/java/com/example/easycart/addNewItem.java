@@ -204,7 +204,7 @@ public class addNewItem extends BottomSheetDialogFragment {
 
                     // insert the item into database
                     sqLiteHelper.insertItem(itemModel);
-                    Toast.makeText(getContext(), "New Item Added!", Toast.LENGTH_SHORT).show();
+                    // Toast.makeText(getContext(), "New Item Added!", Toast.LENGTH_SHORT).show();
                     dismiss();
                 }else{
                     Toast.makeText(getContext(), "Info Not Complete", Toast.LENGTH_SHORT).show();
