@@ -2,7 +2,7 @@ package com.example.easycart.Model;
 
 public class ItemModel {
 
-    private String name, note;
+    private String name, note, image;
     private int quantity, id, status;
     private double price;
 
@@ -52,5 +52,13 @@ public class ItemModel {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 }

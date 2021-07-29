@@ -106,7 +106,6 @@ public class historyAdapter extends RecyclerView.Adapter<historyAdapter.historyV
         purchasedItemList = getPurchasedItemList();
         int id = purchasedItemList.get(position).getId();
         sqLiteHelper.updateStatus(id,status);
-
         // remove the item from the list == remove from the recycle view
         purchasedItemList.remove(position);
         notifyDataSetChanged();

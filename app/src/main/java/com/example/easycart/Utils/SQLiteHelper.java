@@ -23,8 +23,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public static final String NAME_COL = "NAME";
     public static final String PRICE_COL = "PRICE";
     public static final String QUANTITY_COL = "QUANTITY";
-    public static final String STATUS_COL = "STATUS";
     public static final String NOTE_COL = "NOTE";
+    public static final String IMAGE_COL = "IMAGE";
+    public static final String STATUS_COL = "STATUS";
     private SQLiteDatabase sqLiteDatabase;
 
 
@@ -36,7 +37,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE IF NOT EXISTS " + MYDATABASE_TABLE
                 + "(ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME TEXT NOT NULL, " +
-                "PRICE REAL, QUANTITY INTEGER, NOTE TEXT, STATUS INTEGER)");
+                "PRICE REAL, QUANTITY INTEGER, NOTE TEXT, IMAGE TEXT, STATUS INTEGER)");
     }
 
     @Override
@@ -55,6 +56,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         contentValues.put(PRICE_COL, item.getPrice());
         contentValues.put(QUANTITY_COL, item.getQuantity());
         contentValues.put(NOTE_COL, item.getNote());
+        contentValues.put(IMAGE_COL, item.getImage());
         contentValues.put(STATUS_COL, item.getStatus());
 
         sqLiteDatabase.insert(MYDATABASE_TABLE, null, contentValues);
@@ -92,6 +94,14 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         sqLiteDatabase.update(MYDATABASE_TABLE, contentValues, "ID=?", new String[]{String.valueOf(id)});
     }
 
+    public void updateImage(int id, String image) {
+        sqLiteDatabase = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(IMAGE_COL, image);
+
+        sqLiteDatabase.update(MYDATABASE_TABLE, contentValues, "ID=?", new String[]{String.valueOf(id)});
+    }
+
     public void updateStatus(int id, int status) {
         sqLiteDatabase = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -121,8 +131,9 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         int name_index = cursor.getColumnIndex(NAME_COL);
         int price_index = cursor.getColumnIndex(PRICE_COL);
         int quantity_index = cursor.getColumnIndex(QUANTITY_COL);
-        int status_index = cursor.getColumnIndex(STATUS_COL);
         int note_index = cursor.getColumnIndex(NOTE_COL);
+        int image_index = cursor.getColumnIndex(IMAGE_COL);
+        int status_index = cursor.getColumnIndex(STATUS_COL);
 
         sqLiteDatabase.beginTransaction();
         try {
@@ -133,6 +144,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 item.setPrice(cursor.getDouble(price_index));
                 item.setQuantity(cursor.getInt(quantity_index));
                 item.setNote(cursor.getString(note_index));
+                item.setImage(cursor.getString(image_index));
                 item.setStatus(cursor.getInt(status_index));
                 itemModelList.add(item);
             }

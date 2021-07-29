@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity implements onDialogCloseList
                 intent.putExtra("itemPrice", itemModelList.get(position).getPrice());
                 intent.putExtra("itemQuantity", itemModelList.get(position).getQuantity());
                 intent.putExtra("itemNote", itemModelList.get(position).getNote());
+                intent.putExtra("itemImage", itemModelList.get(position).getImage());
                 intent.putExtra("position", position);
                 intent.putExtra("id", id);
                 startActivity(intent);

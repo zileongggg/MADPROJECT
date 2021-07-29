@@ -1,221 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/itemImage"
-        android:layout_width="180dp"
-        android:layout_height="180dp"
-        android:scaleType="centerCrop"
-        android:src="@mipmap/ic_launcher"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="20dp"/>
-
-    <!--Item-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="Item"
-        android:textSize="15sp" />
-    <EditText
-        android:id="@+id/nameEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="Item 1"
-        android:textSize="20sp" />
-
-    <!--Price-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="Price"
-        android:textSize="15sp" />
-    <EditText
-        android:id="@+id/priceEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="34.5"
-        android:textSize="20sp" />
-
-    <!--Quantity-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="Quantity"
-        android:textSize="15sp" />
-    <EditText
-        android:id="@+id/qtyEdit"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:fontFamily="@font/poppins_medium"
-        android:text="4"
-        android:textSize="20sp" />
-
-    <!--Note-->
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="10dp"
-        android:fontFamily="@font/poppins_regular"
-        android:text="Note"
-        android:textSize="15sp" />
-
-    <EditText
-        android:id="@+id/noteEdit"
-        android:layout_width="match_parent"
-        android:layout_height="89dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginRight="20dp"
-        android:background="@drawable/input_border"
-        android:fontFamily="@font/poppins_medium"
-        android:hint="write something..."
-        android:gravity="center_horizontal"
-        android:maxHeight="70dp"
-        android:maxLines="4"
-        android:padding="8dp"
-        android:textSize="15sp" />
-
-    <!--Button-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="20dp">
-        <Button
-            android:id="@+id/editCancel"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center_horizontal"/>
+
+        <!--Item-->
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Cancel"
-            android:layout_marginRight="40dp"
-            android:backgroundTint="@color/secondary"/>
-        <Button
-            android:id="@+id/editSave"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Item"
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/nameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/poppins_light"
+            android:text="Item 1"
+            android:textSize="20sp" />
+
+        <!--Price-->
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Save"
-            android:layout_marginLeft="40dp"
-            android:backgroundTint="@color/primary"
-            android:textColor="@color/secondary"/>
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Price"
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/priceEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/poppins_light"
+            android:text="34.5"
+            android:textSize="20sp" />
+
+        <!--Quantity-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Quantity"
+            android:textSize="15sp" />
+        <EditText
+            android:id="@+id/qtyEdit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:fontFamily="@font/poppins_light"
+            android:text="4"
+            android:textSize="20sp" />
+
+        <!--Note-->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginLeft="24dp"
+            android:layout_marginTop="10dp"
+            android:fontFamily="@font/poppins_regular"
+            android:text="Note"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/noteEdit"
+            android:layout_width="match_parent"
+            android:layout_height="89dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/input_border"
+            android:fontFamily="@font/poppins_light"
+            android:hint="write something..."
+            android:gravity="center_horizontal"
+            android:maxHeight="70dp"
+            android:maxLines="4"
+            android:padding="8dp"
+            android:textSize="15sp" />
+
+        <!--Button-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp">
+            <Button
+                android:id="@+id/editCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cancel"
+                android:layout_marginRight="40dp"
+                android:backgroundTint="@color/secondary"/>
+            <Button
+                android:id="@+id/editSave"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Save"
+                android:layout_marginLeft="40dp"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/secondary"/>
+        </LinearLayout>
+
     </LinearLayout>
 
-     <!-- &lt;!&ndash;Quantity&ndash;&gt;
-      <TextView
-          android:id="@+id/textView3"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/textView2"
-          android:layout_alignStart="@+id/textView2"
-          android:layout_alignLeft="@+id/textView2"
-          android:layout_marginTop="30dp"
-          android:fontFamily="@font/poppins_regular"
-          android:text="Quanitty"
-          android:textSize="20sp" />
-
-      <EditText
-          android:id="@+id/qtyEdit"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignStart="@+id/priceEdit"
-          android:layout_alignLeft="@+id/priceEdit"
-          android:layout_alignBottom="@+id/textView3"
-          android:fontFamily="@font/poppins_medium"
-          android:text="3"
-          android:textSize="25sp" />
-
-      &lt;!&ndash;subTotal&ndash;&gt;
-      <TextView
-          android:id="@+id/textView4"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/textView3"
-          android:layout_alignStart="@+id/textView3"
-          android:layout_alignLeft="@+id/textView3"
-          android:layout_marginTop="30dp"
-          android:fontFamily="@font/poppins_regular"
-          android:text="subTotal"
-          android:textSize="20sp" />
-
-      <TextView
-          android:id="@+id/subTotal"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_alignStart="@+id/qtyEdit"
-          android:layout_alignLeft="@+id/qtyEdit"
-          android:layout_alignBottom="@+id/textView4"
-          android:fontFamily="@font/poppins_medium"
-          android:text="RM 23.4"
-          android:textColor="@color/black"
-          android:textSize="25sp" />
-
-      &lt;!&ndash;line&ndash;&gt;
-      <View
-          android:layout_width="350dp"
-          android:layout_height="1dp"
-          android:layout_below="@+id/textView4"
-          android:layout_centerHorizontal="true"
-          android:layout_marginTop="30dp"
-          android:background="@color/secondary" />
-
-      <TextView
-          android:id="@+id/textView5"
-          android:layout_width="wrap_content"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/textView4"
-          android:layout_alignParentStart="true"
-          android:layout_alignParentLeft="true"
-          android:layout_marginStart="50dp"
-          android:layout_marginLeft="50dp"
-          android:layout_marginTop="50dp"
-          android:fontFamily="@font/poppins_medium"
-          android:text="Note"
-          android:textSize="20sp" />
-
-      <EditText
-          android:layout_width="330dp"
-          android:layout_height="wrap_content"
-          android:layout_below="@+id/textView5"
-          android:layout_centerHorizontal="true"
-          android:background="@drawable/input_border"
-          android:gravity="top|left"
-          android:inputType="textMultiLine"
-          android:lines="8"
-          android:maxLines="10"
-          android:minLines="6"
-          tools:ignore="RtlHardcoded" />-->
-
-
-</LinearLayout>
+</ScrollView>
